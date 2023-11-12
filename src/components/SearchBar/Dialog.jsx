@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Dialog, DialogActions, DialogContent, Button } from '@mui/material';
+import { Dialog } from '@mui/material';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -39,12 +39,12 @@ export default function SimpleDialog(props) {
   return (
     <Dialog onClose={handleClose} open={open} fullWidth>
       <div
-        className="flex flex-col gap-4 min-h-[30vh] h-fit w-full"
+        className="flex flex-col gap-4 min-h-[30vh] h-fit w-full p-4"
         style={{ backgroundColor: isDark ? '#29435C' : '#fff' }}
       >
         <div
           style={{ backgroundColor: isDark ? '#29435C' : '#fff' }}
-          className="p-4 flex gap-2 items-center w-full relative  "
+          className=" flex gap-2 items-center w-full relative  "
         >
           <input
             autoFocus
@@ -56,13 +56,30 @@ export default function SimpleDialog(props) {
           />
           {search.trim() !== '' && (
             <AiOutlineClose
-              className="text-2xl text-slate-800 absolute  right-20 cursor-pointer hover:text-slate-700"
+              className="text-2xl text-slate-800 absolute right-14 cursor-pointer hover:text-slate-700"
               onClick={handleClear}
             />
           )}
           <span className="px-2 py-2 shadow-md rounded-lg bg-slate-500 text-white">
             Esc
           </span>
+        </div>
+        <div className="">
+          {search.trim() === '' ? (
+            <h3
+              className="text-2xl font-bold"
+              style={{ color: isDark ? '#fff' : '#000' }}
+            >
+              Recents
+            </h3>
+          ) : (
+            <h3
+              className="text-2xl font-bold"
+              style={{ color: isDark ? '#fff' : '#000' }}
+            >
+              Results
+            </h3>
+          )}
         </div>
       </div>
     </Dialog>
