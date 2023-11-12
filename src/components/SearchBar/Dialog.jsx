@@ -31,6 +31,7 @@ export default function SimpleDialog(props) {
     <Dialog onClose={handleClose} open={open} fullWidth>
       <div className="p-4 rounded-lg flex gap-2 items-center  ">
         <input
+          autoFocus
           onChange={(e) => setSearch(e.target.value)}
           value={search}
           type="text"

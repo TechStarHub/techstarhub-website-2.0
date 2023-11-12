@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeMode } from '../store';
 import { Link } from 'react-router-dom';
 import { Tooltip, IconButton, Menu, MenuItem, Button } from '@mui/material';
 import SearchBar from './SearchBar/SearchBar';
@@ -8,24 +10,23 @@ import { BiSun, BiMoon } from 'react-icons/bi';
 import { AiFillCaretDown } from 'react-icons/ai';
 
 export default function Header() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.mode.mode);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   // Menu controls
   const handleMenuOpen = (event) => {
-    // setMenuOpen(true);
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = () => {
-    // setMenuOpen(false);
     setAnchorEl(null);
   };
 
   // Toggle Dark Mode
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    dispatch(changeMode(mode === 'dark' ? 'light' : 'dark'));
   };
 
   return (
@@ -80,9 +81,11 @@ export default function Header() {
       </div>
 
       <div className="flex items-center border-l-2 border-slate-400 pl-2">
-        <Tooltip title="Toggle Dark Mode">
+        <Tooltip
+          title={mode === 'dark' ? 'Dark mode is on' : 'Light mode is on'}
+        >
           <IconButton onClick={toggleDarkMode}>
-            {darkMode ? (
+            {mode === 'dark' ? (
               <BiSun className="text-2xl text-slate-600" />
             ) : (
               <BiMoon className="text-2xl text-slate-600" />

@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeSearch } from '../../store';
 import { BiSearch } from 'react-icons/bi';
 import SimpleDialog from './Dialog';
 
 export default function SearchBar() {
+  const dispatch = useDispatch();
+  const search = useSelector((state) => state.search.search);
+
   const [openDialog, setOpenDialog] = useState(false);
-  const [search, setSearch] = useState('');
+
+  const setSearch = (search) => {
+    dispatch(changeSearch(search));
+  };
 
   const handleClose = () => {
     setOpenDialog(false);
-    setSearch('');
+    // setSearch('');
   };
   const handleOpen = () => {
     setOpenDialog(true);
