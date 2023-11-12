@@ -1,10 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BsGithub, BsLinkedin, BsTwitter } from 'react-icons/bs';
 
 export default function Footer() {
+  const mode = useSelector((state) => state.mode.mode);
+  const isDark = mode === 'dark' ? true : false;
+
   return (
-    <footer className="flex flex-col items-center gap-3 p-4 lg:p-8 lg:pb-4 w-full border-t-[1px] border-t-[#dddddd]">
+    <footer
+      className="flex flex-col items-center gap-3 p-4 lg:p-8 lg:pb-4 w-full border-t-[1px] border-t-[#dddddd]"
+      style={{
+        backgroundColor: isDark ? '#13293D' : '#ffffff',
+        color: isDark ? '#fff' : '#000',
+      }}
+    >
       <div className="flex flex-col lg:flex-row items-center gap-5 justify-between w-full">
         <div className="flex flex-col justify-start w-full lg:w-fit ">
           <h1 className="text-2xl font-bold ">TechStarHub 🌟</h1>
