@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { motion } from 'framer-motion';
+import { motion, useAnimate, useInView } from 'framer-motion';
 import wave from '../../assets/wave.svg';
 import githubIcon from '../../assets/github.svg';
 import gitIcon from '../../assets/git.svg';
-import gitlabIcon from '../../assets/gitlab.svg';
 import { SiGnubash } from 'react-icons/si';
 import { BsGithub } from 'react-icons/bs';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -26,13 +25,65 @@ user@device MINGW64 /d/Projects (main) $ git push origin main
 `;
 
 export default function OpenSource() {
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
   const mode = useSelector((state) => state.mode.mode);
   const isDark = mode === 'dark' ? true : false;
 
   const [codeIdx, setCodeIdx] = useState(0);
 
+  const [scope, animate] = useAnimate();
+  const [editorScope, editorAnimate] = useAnimate();
+  const isInView = useInView(scope);
+
+  useEffect(() => {
+    if (isInView) {
+      animate(
+        scope.current,
+        {
+          opacity: 1,
+        },
+        {
+          duration: 1,
+        },
+      );
+      editorAnimate(
+        editorScope.current,
+        {
+          opacity: 1,
+          y: 0,
+        },
+        {
+          duration: 1,
+        },
+      );
+    } else {
+      animate(
+        scope.current,
+        {
+          opacity: 0,
+        },
+        {
+          duration: 1,
+        },
+      );
+      editorAnimate(
+        editorScope.current,
+        {
+          opacity: 0,
+          y: windowHeight,
+        },
+        {
+          duration: 1,
+        },
+      );
+    }
+  }, [isInView]);
+
   return (
     <div
+      ref={scope}
       className="w-full flex flex-col justify-center items-center min-h-screen relative py-10"
       style={{
         backgroundColor: isDark ? '#213555' : '#F0F0F0',
@@ -47,10 +98,6 @@ export default function OpenSource() {
         </h1>
         <p className="text-3xl ">
           Make your first contribution to open source.
-        </p>
-        <p className="text-sm text-slate-200">
-          Open source software is made by people just like you. Learn how to
-          launch and grow your project.
         </p>
       </div>
 
@@ -80,7 +127,10 @@ export default function OpenSource() {
           )}
         </div>
         <div className="w-[100vw] md:w-[40vw] h-full">
-          <div className="h-full w-full p-4 bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 flex flex-col gap-1">
+          <div
+            ref={editorScope}
+            className="h-full w-full p-4 bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 flex flex-col gap-1"
+          >
             <div className="flex w-full">
               <span
                 style={{

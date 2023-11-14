@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -6,7 +6,8 @@ import reactIcon from '../../assets/react.svg';
 import javascriptIcon from '../../assets/js.svg';
 import pythonIcon from '../../assets/python.svg';
 import { AiOutlineClose } from 'react-icons/ai';
-import { motion } from 'framer-motion';
+import { motion, useInView, useAnimate } from 'framer-motion';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 const learnings = ['React', 'JavaScript', 'Python'];
 const languages = ['react', 'javascript', 'python'];
@@ -48,13 +49,72 @@ if __name__ == "__main__":
 ];
 
 export default function Learn() {
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
   const mode = useSelector((state) => state.mode.mode);
   const isDark = mode === 'dark' ? true : false;
 
   const [codeIdx, setCodeIdx] = useState(0);
 
+  const [scope, animate] = useAnimate();
+  const [editorScope, editorAnimate] = useAnimate();
+  const isInView = useInView(scope);
+
+  useEffect(() => {
+    if (isInView) {
+      animate(
+        scope.current,
+        {
+          opacity: 1,
+        },
+        {
+          duration: 1,
+        },
+      );
+      editorAnimate(
+        editorScope.current,
+        {
+          opacity: 1,
+          y: 0,
+        },
+        {
+          duration: 1,
+        },
+      );
+    } else {
+      animate(
+        scope.current,
+        {
+          opacity: 0,
+        },
+        {
+          duration: 1,
+        },
+      );
+      editorAnimate(
+        editorScope.current,
+        {
+          opacity: 0,
+          y: windowHeight,
+        },
+        {
+          duration: 1,
+        },
+      );
+    }
+  }, [isInView]);
+
+  useHotkeys('ctrl+right', () =>
+    setCodeIdx((prev) => (prev + 1) % learnings.length),
+  );
+  useHotkeys('ctrl+left', () =>
+    setCodeIdx((prev) => (prev - 1 + learnings.length) % learnings.length),
+  );
+
   return (
     <div
+      ref={scope}
       className="w-full flex flex-col gap-5 justify-center items-center min-h-screen py-10"
       style={{
         backgroundColor: isDark ? '#0f172a' : '#ffffff',
@@ -71,7 +131,10 @@ export default function Learn() {
       </div>
 
       <div className="w-full flex flex-col gap-5 md:flex-row justify-center items-center">
-        <div className=" w-[90vw] md:w-[40vw] p-4 bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 flex flex-col gap-2">
+        <div
+          ref={editorScope}
+          className=" w-[90vw] md:w-[40vw] p-4 bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 flex flex-col gap-2"
+        >
           <div className="w-full flex  ">
             <span
               style={{
@@ -131,7 +194,14 @@ export default function Learn() {
             >
               {code[codeIdx]}
             </SyntaxHighlighter>
-            <code className=""></code>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-slate-500 text-sm">
+              Ctrl + Left/Right to switch languages.
+            </span>
+            <span className="text-slate-500 text-sm">
+              {codeIdx + 1}/{code.length}
+            </span>
           </div>
         </div>
         <div className="w-[40vw] flex justify-center items-center">
