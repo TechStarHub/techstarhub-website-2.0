@@ -48,46 +48,36 @@ export default function OpenSource() {
         <p className="text-3xl ">
           Make your first contribution to open source.
         </p>
+        <p className="text-sm text-slate-200">
+          Open source software is made by people just like you. Learn how to
+          launch and grow your project.
+        </p>
       </div>
 
       <div className="w-full h-full flex flex-col md:flex-row justify-center items-center z-10">
-        <div className=" w-[80vw] md:w-[40vw] flex ">
-          <motion.img
-            animate={{
-              x: [0, 160, 0, 0],
-              y: [0, 100, 200, 0],
-              scale: [1, 1.1, 1.3, 1],
-            }}
-            style={{ filter: 'drop-shadow( 0 0 5px #00000055)' }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-            src={githubIcon}
-            className="w-full"
-            alt=""
-          />
-          <motion.img
-            animate={{
-              x: [-100, 0, 0, -100],
-              y: [100, 160, 0, 100],
-              scale: [1, 1.1, 1.3, 1],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-            src={gitIcon}
-            style={{ filter: 'drop-shadow( 0 0 5px #F94A2955)' }}
-            className="w-full"
-            alt=""
-          />
-          <motion.img
-            animate={{
-              x: [0, -160, 0, 0],
-              y: [0, 100, 200, 0],
-              scale: [1, 1.1, 1.3, 1],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-            src={gitlabIcon}
-            style={{ filter: 'drop-shadow( 0 0 5px #F94A2955)' }}
-            className="w-full"
-            alt=""
-          />
+        <div className=" w-[80vw] md:w-[40vw] flex flex-col ">
+          {codeIdx === 1 && (
+            <motion.img
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1, rotate: [0, 0, 0, 360, 0] }}
+              style={{ filter: 'drop-shadow( 0 0 5px #00000055)' }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+              src={githubIcon}
+              className="w-full"
+              alt=""
+            />
+          )}
+          {codeIdx === 0 && (
+            <motion.img
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+              src={gitIcon}
+              style={{ filter: 'drop-shadow( 0 0 5px #F94A2955)' }}
+              className="w-full"
+              alt=""
+            />
+          )}
         </div>
         <div className="w-[100vw] md:w-[40vw] h-full">
           <div className="h-full w-full p-4 bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 flex flex-col gap-1">

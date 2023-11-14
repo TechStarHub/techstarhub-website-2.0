@@ -96,7 +96,7 @@ export default function Cards() {
       <div className="flex flex-col gap-[4rem] justify-center items-center my-20">
         <div
           ref={card1}
-          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:-left-20 shadow-lg "
+          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:-left-20 shadow-lg bg-[url('/blobs/blob1.svg')] bg-no-repeat bg-right bg-cover  "
           style={{
             backgroundColor: isDark ? '#1F4068' : '#F5F7F8',
             color: isDark ? '#ffffff' : '#000000',
@@ -110,7 +110,7 @@ export default function Cards() {
         </div>
         <div
           ref={card2}
-          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:left-20 shadow-lg"
+          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:left-20 shadow-lg bg-[url('/blobs/blob2.svg')] bg-no-repeat bg-right bg-cover"
           style={{
             backgroundColor: isDark ? '#221F3B' : '#D0D4CA',
             color: isDark ? '#ffffff' : '#000000',
@@ -124,7 +124,7 @@ export default function Cards() {
         </div>
         <div
           ref={card3}
-          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:-left-20 shadow-lg "
+          className=" text-slate-300 p-6 rounded-lg w-3/4 md:w-1/2 md:relative md:-left-20 shadow-lg bg-[url('/blobs/blob3.svg')] bg-no-repeat bg-right bg-cover"
           style={{
             backgroundColor: isDark ? '#1F4068' : '#F5F7F8',
             color: isDark ? '#ffffff' : '#000000',
