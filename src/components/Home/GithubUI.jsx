@@ -76,7 +76,7 @@ export default function GithubUI() {
           <span className="text-white text-[12px]">
             Discuss and review the changes in this comparison with others.
           </span>
-          <span className="w-[9rem] h-[30px] px-2 p-1 rounded-md text-white text-sm cursor-pointer bg-[#239150] hover:bg-[#2ea043]">
+          <span className="w-[10rem] px-2 p-1 rounded-md text-white text-sm cursor-pointer bg-[#239150] hover:bg-[#2ea043]">
             Create pull request
           </span>
         </div>
@@ -99,7 +99,7 @@ export default function GithubUI() {
         </div>
         <div className="w-full mt-3">
           <DiGitCommit className="inline-block mr-1 text-xl text-slate-400" />
-          <span className="text-slate-400">Commits on {dateStr}</span>
+          <span className="text-slate-400 text-sm">Commits on {dateStr}</span>
           <div className="w-full mt-2 border border-slate-300 rounded-md">
             <div className="px-3 py-2">
               <div className="flex items-start justify-between">

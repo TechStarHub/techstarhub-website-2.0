@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCodeFork } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa6';
 import { GoIssueOpened } from 'react-icons/go';
 import { RiGitPullRequestLine } from 'react-icons/ri';
 import { SiGoogledocs } from 'react-icons/si';
+import { Avatar, AvatarGroup } from '@mui/material';
 
 export default function RepoCard({ repo, key, isDark, view = 'list' }) {
   const lastUpdated = new Date(repo.pushed_at).toLocaleDateString('en-US', {
@@ -47,6 +48,15 @@ export default function RepoCard({ repo, key, isDark, view = 'list' }) {
         return '#fff';
     }
   };
+
+  const [contributors, setContributors] = useState([]);
+
+  useEffect(() => {
+    fetch(repo.contributors_url)
+      .then((res) => res.json())
+      .then((data) => setContributors(data));
+  }, []);
+
   return (
     <div
       className="p-3 bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100"
@@ -56,16 +66,35 @@ export default function RepoCard({ repo, key, isDark, view = 'list' }) {
       }}
       key={key}
     >
-      <div className="flex items-center gap-2">
-        <Link
-          to={repo.html_url}
-          className="text-2xl font-medium text-[#2f81f7] hover:underline"
-        >
-          {repo.name}
-        </Link>
-        <span className="px-2 rounded-full bg-gray-600 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100">
-          {repo.private ? `Private` : `Public`}
-        </span>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <Link
+            to={repo.html_url}
+            className="text-2xl font-medium text-[#2f81f7] hover:underline"
+          >
+            {repo.name}
+          </Link>
+          <span className="px-2 rounded-full bg-gray-600 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100">
+            {repo.private ? `Private` : `Public`}
+          </span>
+        </div>
+        {view == 'list' && (
+          <div className="hidden sm:block">
+            <AvatarGroup max={3}>
+              {contributors.map((contributor) => (
+                <Avatar
+                  src={contributor.avatar_url}
+                  className="cursor-pointer"
+                  style={{
+                    width: '2rem',
+                    height: '2rem',
+                    border: '2px solid #fff',
+                  }}
+                />
+              ))}
+            </AvatarGroup>
+          </div>
+        )}
       </div>
       <div className="flex flex-col">
         <p
