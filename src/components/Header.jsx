@@ -65,18 +65,11 @@ export default function Header() {
           Home
         </Link>
         <Link
-          to="/"
+          to="/learn"
           className="text-md rounded p-1 animate-slide-right"
           style={{ color: isDark ? '#fff' : '#000' }}
         >
           Learn
-        </Link>
-        <Link
-          to="/about"
-          className="text-md rounded p-1 animate-slide-right"
-          style={{ color: isDark ? '#fff' : '#000' }}
-        >
-          About
         </Link>
         <Link
           to="/contact"
