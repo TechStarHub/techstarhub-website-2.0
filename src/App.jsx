@@ -4,13 +4,15 @@ import BrowserRouter from './routes';
 import { AnimatePresence } from 'framer-motion';
 import { Provider } from 'react-redux';
 import store from './store';
-
+import { SuspenseProvider } from './routes';
 function App() {
   return (
     <>
       <AnimatePresence>
         <Provider store={store}>
-          <RouterProvider router={BrowserRouter} />
+          <SuspenseProvider>
+            <RouterProvider router={BrowserRouter} />
+          </SuspenseProvider>
         </Provider>
       </AnimatePresence>
     </>

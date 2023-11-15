@@ -1,9 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import Loader from './components/Loader';
 
-import Home from './pages/Home';
-import Contact from './pages/Contact';
-import Repos from './pages/Repos';
-import Projects from './pages/Projects';
+const Home = lazy(() => import('./pages/Home'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Repos = lazy(() => import('./pages/Repos'));
+const Projects = lazy(() => import('./pages/Projects'));
+
+export function SuspenseProvider({ children }) {
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
+}
 
 const BrowserRouter = createBrowserRouter([
   {
