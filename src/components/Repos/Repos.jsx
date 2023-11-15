@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import RepoCard from './RepoCard';
 import { TbLayoutList } from 'react-icons/tb';
 import { TbLayoutGrid } from 'react-icons/tb';
 import { FaAngleRight } from 'react-icons/fa';
 import { FaAngleLeft } from 'react-icons/fa';
+import Loader from './../Loader';
+const RepoCard = lazy(() => import('./RepoCard'));
 
 export default function Repos({ repos }) {
   const mode = useSelector((state) => state.mode.mode);
@@ -85,15 +86,22 @@ export default function Repos({ repos }) {
             view == 'list' ? 'flex flex-col ' : 'grid grid-cols-2 grid-flow-row'
           } gap-3  `}
         >
-          {repos ? (
-            repos.map((repo) => (
-              <RepoCard key={repo.id} repo={repo} isDark={isDark} view={view} />
-            ))
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="text-2xl font-medium">No repos found</span>
-            </div>
-          )}
+          <Suspense fallback={<Loader />}>
+            {repos ? (
+              repos.map((repo) => (
+                <RepoCard
+                  key={repo.id}
+                  repo={repo}
+                  isDark={isDark}
+                  view={view}
+                />
+              ))
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <span className="text-2xl font-medium">No repos found</span>
+              </div>
+            )}
+          </Suspense>
         </div>
         <div className="w-full flex justify-center items-center my-2">
           <span className="text-2xl font-medium cursor-pointer">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, useAnimate, useInView } from 'framer-motion';
 import wave from '../../assets/wave.svg';
